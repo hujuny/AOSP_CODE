@@ -27,8 +27,6 @@ Android 10 API 29
 
 repo作为git的管理工具，Gerrit提交代码（审核图形化界面）	
 
-echo 203.208.40.66 translate.googleapis.com >> C:\Windows\System32\drivers\etc\hosts & ipconfig /flushdns > nul
-
 repo init -u https://aosp.tuna.tsinghua.edu.cn/platform/manifest -b android-13.0.0_r15
 
 ### 开始
@@ -300,5 +298,32 @@ lunch 目标名(初始化环境会打印)
 
 ##### 构建代码
 
+用`m`构建一切。 `m`可以使用`-jN`参数处理并行任务。如果您不提供`-j`参数，构建系统会自动选择它认为最适合您的系统的并行任务计数。
 
+```shell
+m
+m droid是正常构建。这个目标在这里是因为默认目标需要一个名称。
+m all构建m droid所做的一切，加上没有droid标签的一切。构建服务器运行它以确保构建树中的所有内容并具有Android.mk文件。
+mma - 构建当前目录中的所有模块及其依赖项。
+mmma - 构建提供的目录中的所有模块及其依赖项。
+croot - cd到树的顶部。
+clean - m clean删除此配置的所有输出和中间文件。这与rm -rf out/相同。
+m help查看m提供的其他伪目标。
+```
 
+##### 运行构建
+
+要刷新设备，请使用`fastboot`
+
+模拟器会在构建过程中自动添加到您的路径中。要运行模拟器，请键入
+
+```shell
+emulator
+```
+
+构建指纹
+
+**常见构建错误**
+
+* Java版本错误
+* 没有USB权限
